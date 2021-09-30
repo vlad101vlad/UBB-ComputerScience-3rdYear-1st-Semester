@@ -1,4 +1,7 @@
-package en.ubbcluj.info;
+package en.ubbcluj.info.util;
+
+import en.ubbcluj.info.domain.Account;
+import en.ubbcluj.info.domain.Operation;
 
 import java.util.List;
 import java.util.ArrayList;

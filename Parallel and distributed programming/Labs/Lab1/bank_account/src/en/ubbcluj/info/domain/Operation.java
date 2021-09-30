@@ -1,4 +1,4 @@
-package en.ubbcluj.info;
+package en.ubbcluj.info.domain;
 
 public class Operation {
     public static int operationIDCounter = 1;

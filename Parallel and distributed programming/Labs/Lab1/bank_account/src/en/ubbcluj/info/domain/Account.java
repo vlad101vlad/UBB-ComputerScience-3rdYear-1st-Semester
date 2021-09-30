@@ -1,4 +1,4 @@
-package en.ubbcluj.info;
+package en.ubbcluj.info.domain;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -40,6 +40,6 @@ public class Account {
             "\n\tid=" + id +
             ", \n\tbalance=" + balance +
             ", \n\tLOGS=" + LOGS +
-            '}';
+            "\n}\n";
     }
 }
