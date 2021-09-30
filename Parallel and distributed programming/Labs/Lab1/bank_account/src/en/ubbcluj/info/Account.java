@@ -37,9 +37,9 @@ public class Account {
     @Override
     public String toString() {
         return "Account{" +
-            "id=" + id +
-            ", balance=" + balance +
-            ", LOGS=" + LOGS +
+            "\n\tid=" + id +
+            ", \n\tbalance=" + balance +
+            ", \n\tLOGS=" + LOGS +
             '}';
     }
 }

@@ -35,11 +35,6 @@ public class Operation {
 
     @Override
     public String toString() {
-        return "Operation{" +
-            "operationID=" + operationID +
-            ", sourceID=" + sourceID +
-            ", destinationID=" + destinationID +
-            ", amount=" + amount +
-            '}';
+        return String.format("\noperation#%d ~ %d money from %d to %d", operationID, amount, sourceID, destinationID);
     }
 }
