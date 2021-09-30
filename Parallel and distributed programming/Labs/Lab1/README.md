@@ -1,9 +1,9 @@
-Goal
-The goal of this lab is to refresh the knowledge regarding threads and mutexes.
+# **Goal**
+##### The goal of this lab is to refresh the knowledge regarding threads and mutexes.
 
 The programs to be written will demonstrate the usage of threads to do non-cooperative work on shared data. The access to the shared data must be protected by using mutexes.
 
-2. Bank accounts
+## 2. Bank accounts
 At a bank, we have to keep track of the balance of some accounts. Also, each account has an associated log (the list of records of operations performed on that account). Each operation record shall have a unique serial number, that is incremented for each operation performed in the bank.
 
 We have concurrently run transfer operations, to be executer on multiple threads. Each operation transfers a given amount of money from one account to someother account, and also appends the information about the transfer to the logs of both accounts.
