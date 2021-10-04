@@ -4,50 +4,61 @@ import en.ubbcluj.info.domain.Account;
 import en.ubbcluj.info.domain.Operation;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class MarketService {
+public class MarketService implements Runnable {
     private final List<Account> accountList;
-    private final List<Operation> operationList;
     private final LoggerService loggerService;
+    private final Iterator<Operation> operationIterator;
+    private Operation workingOperation = null;
 
-    public MarketService(List<Account> accountList, List<Operation> operationList, LoggerService loggerService) {
+    public MarketService(List<Account> accountList, LoggerService loggerService, Iterator<Operation> operationIterator) {
         this.accountList = accountList;
-        this.operationList = operationList;
         this.loggerService = loggerService;
+        this.operationIterator = operationIterator;
     }
 
-    public void runSequentialy() throws IOException {
-        logStartData();
-
-        for(Operation operation: operationList){
-            Account source = accountList.stream()
-                .filter(account -> account.getId() == operation.getSourceID()).findFirst().get();
-            Account destination = accountList.stream()
-                .filter(account -> account.getId() == operation.getDestinationID()).findFirst().get();
-            
-            if(source.getBalance() - operation.getAmount() >= 0){
-                source.setBalance(source.getBalance() - operation.getAmount());
-                destination.setBalance(destination.getBalance() + operation.getAmount());
-
-                source.getLOGS().add(operation);
-                destination.getLOGS().add(operation);
-
-                logOperation(operation);
-                logAccountsBalance();
+    public void run() {        
+        ReentrantLock reentrantLock = new ReentrantLock();
+        while(true){
+            synchronized (operationIterator){
+                if(operationIterator.hasNext()){
+                    workingOperation = operationIterator.next();
+                }
+                else {
+                    break;
+                }
             }
+
+            Account source = accountList.stream()
+                .filter(account -> account.getId() == workingOperation.getSourceID()).findFirst().get();
+            Account destination = accountList.stream()
+                .filter(account -> account.getId() == workingOperation.getDestinationID()).findFirst().get();
+
+            synchronized (this){
+                if(source.getBalance() - workingOperation.getAmount() >= 0){
+                    source.setBalance(source.getBalance() - workingOperation.getAmount());
+                    destination.setBalance(destination.getBalance() + workingOperation.getAmount());
+
+                    source.getLOGS().add(workingOperation);
+                    destination.getLOGS().add(workingOperation);
+
+                    try{
+                        logOperation(workingOperation);
+                        logAccountsBalance();
+                    }catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }            
         }
-
-        loggerService.closeLogWriter();
-    }
-
-    public void run(){
-
     }
 
 
 
-    private void logStartData() throws IOException {
+    public void logStartData(List<Operation> operationList) throws IOException {
         loggerService.log("\n~Accounts at the start of the market:\n");
         for(Account account: accountList)
             loggerService.log(account.toString());
@@ -62,6 +73,7 @@ public class MarketService {
             .format("\n\n-> Operation#%s was done: transfered %d money from %d to %d\n",
                 operation.getOperationID(), operation.getAmount(), operation.getSourceID(),
                 operation.getDestinationID());
+        loggMessage += "... executed by Thread: " + Thread.currentThread().getName() + "\n";
         loggMessage += "------------------------------------------------------------\n";
         loggerService.log(loggMessage);
     }
