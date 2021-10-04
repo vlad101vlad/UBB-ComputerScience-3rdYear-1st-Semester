@@ -1,0 +1,28 @@
+#include intreg.vlad
+#include inout.vlad
+
+
+nul main
+{
+    intreg @number1;
+    intreg number2 = 2.1;
+    intreg number3;
+
+    intreg maxim = MIN_INTREG;
+
+    scrie: number1;
+    scrie: number2;
+    scrie: number3;
+
+    daca: number1 > maxim{
+        maxim = number1;
+    }
+    daca: number2 > maxim{
+        maxim = number2;
+    }
+    daca: number3 > maxim{
+            maxim = number3;
+    }
+
+    afiseaza: maxim;
+}
