@@ -1,12 +1,15 @@
 package en.ubbcluj.info.domain;
 
+/**
+ * Class used for representing a transfer(operation) from one account to another
+ */
 public class Operation {
     public static int operationIDCounter = 1;
 
-    private int operationID;
-    private int sourceID;
-    private int destinationID;
-    private int amount;
+    private final int operationID;
+    private final int sourceID;
+    private final int destinationID;
+    private final int amount;
 
     public Operation(int sourceID, int destinationID, int amount) {
         this.operationID = operationIDCounter;

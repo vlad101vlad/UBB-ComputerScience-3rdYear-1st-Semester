@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Util class for generating random data for the application
+ */
 public class DataGenerator {
     public static List<Account> generateBankAccounts(){
         List<Account> generatedAccounts = new ArrayList<>();
@@ -24,7 +27,7 @@ public class DataGenerator {
 
     public static List<Operation> generateOperations(){
         List<Operation> generatedOperations = new ArrayList<>();
-        int maxOperations = 15;
+        int maxOperations = 150;
 
         for(int i = 1; i <= maxOperations; i++)
             generatedOperations.add(generateOperation());
