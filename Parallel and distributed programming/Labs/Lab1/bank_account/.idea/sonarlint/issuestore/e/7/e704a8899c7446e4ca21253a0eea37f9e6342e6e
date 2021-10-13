@@ -1,0 +1,5 @@
+
+t
+java:S1104"^Make operationIDCounter a static final constant or non-public and provide accessors if needed.(«Ë£È
+N
+java:S1444"8Make this "public static operationIDCounter" field final(«Ë£È

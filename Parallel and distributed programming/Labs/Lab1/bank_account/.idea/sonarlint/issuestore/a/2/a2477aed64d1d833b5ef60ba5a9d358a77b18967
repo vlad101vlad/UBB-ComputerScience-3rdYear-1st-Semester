@@ -1,0 +1,9 @@
+
+Z
+java:S1854"?Remove this useless assignment to local variable "destination".(ß‘ò•üÿÿÿÿ
+K
+java:S1481"0Remove this unused "destination" local variable.(ß‘ò•üÿÿÿÿ
+k
+java:S3655"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(ß‘ò•üÿÿÿÿ
+k
+java:S3655"PCall "Optional#isPresent()" or "!Optional#isEmpty()" before accessing the value.(®©òøÿÿÿÿ
