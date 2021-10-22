@@ -1,0 +1,82 @@
+1. Lexic
+a) 
+-operators:
+	+, -, *, /, %, <, <=, ==, !=, >=, >, =, +=, -=, /=, *=
+-separators:
+	' '(space), ':', ';', ',', '.', '[', ']', '{', '}', '(', ')'
+-reserved words:
+	daca, altfel, cat timp, pentru, repeta, returneaza, logic, intreg, rational, caracter, sir, tablou, constanta, nul
+
+b)identifiers:
+	-a sequence of letters and  digits, such that the first character is a letter; the rule is:
+	identifier = ("_"|letter){letter|digit}
+
+	letter = "A"|"B"|...|"Z"|"a"|"b"|...|"z"
+	nonzdigit = "1"|...|"9"
+	digit = "0" | nonzdigit
+	nat_number = nonzdigit, {digit}
+	special_symbol = "."|";"|":"|...
+	
+c)Constants
+-integers:
+	intreg := "0" | [ "-" ], nat_number
+-characters:
+	caracter := letter|digit|special_symbol
+-doubles:
+	rational := intreg.{digit}
+-string:
+	sir := "{caracter}"  
+
+---------------------------------------------------------- 2. Syntax: ---------------------------------------------------------------------
+
+program ::= function_list
+
+decllist ::= declaration | declaration ";" decllist
+
+declaration ::= type " " IDENTIFIER ";"
+
+argument ::= type " " IDENTIFIER
+
+argument_list ::= argument | argument "," argument_list
+
+function ::= type_primitive IDENTIFIER "(" [argument_list] ")" "{" [stmlist] "}"
+
+function_list ::= function | function "\n" function_list
+
+type_primitive ::= "logic" | "caracter" | "intreg" | "rational" | "nul"
+
+arraydecl ::= type_primitive "tablou" "[" nat_number "]" ";"
+
+type  ::= type_primitive|arraydecl
+
+stmtlist ::= stmt | stmt ";" stmtlist
+
+stmt ::= simplstmt | structstmt
+
+simplstmt ::= assignstmt | iostmt
+
+assignstmt ::= IDENTIFIER "=" expression ";"
+
+expression ::= expression ("+"|"-") term | term
+
+term ::= term ("*"|"\"|"%") factor | factor
+
+factor ::= expression | IDENTIFIER
+
+iostmt ::= "citeste" | "afiseaza" ":" IDENTIFIER ";"
+
+structstmt ::= ifstmt | whilestmt
+
+ifstmt ::= "daca" ":" condition { stmt } [altfel":" { stmt }]
+
+whilestmt ::= "cat timp" ":" condition { stmt }
+
+condition ::= expression RELATION expression
+
+RELATION ::= "<" | "<=" | "==" | "!=" | ">=" | ">"
+
+-------------------------------------------------------------------------- token.in ---------------------------------------------------------
+
+
++, -, *, /, %, <, <=, ==, !=, >=, >, =, +=, -=, /=, *=, ' ', :, ;, ., [, ], {, }, (, ), daca, altfel, 
+cat timp, pentru, repeta, returneaza, logic, intreg, rational, caracter, sir, tablou, constanta, nul,
