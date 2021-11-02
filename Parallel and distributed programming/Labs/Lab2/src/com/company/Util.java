@@ -10,7 +10,7 @@ public class Util {
 
         for(int index = 1; index <= VECTOR_SIZE; index++){
             int randomValue = new Random().nextInt(20);
-            generatedVector.add(randomValue);
+            generatedVector.add(randomValue);da
         }
 
         return generatedVector;
