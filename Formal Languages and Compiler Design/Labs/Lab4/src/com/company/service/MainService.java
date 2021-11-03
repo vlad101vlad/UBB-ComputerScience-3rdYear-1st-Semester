@@ -24,24 +24,11 @@ public class MainService {
 
         List<String> candidateTokens = generateCandidateTokens(applicationText);
 
-        while(!endOfFile){
-            int nextBlankSpace = applicationText.indexOf(' ');
-            if(nextBlankSpace < 0){
-                break;
-            }
-            String possbileToken = applicationText.substring(currentIndex, nextBlankSpace);
-
-            if(checkReservedOperatorSeparator()){
-                //TODO: generate PIF
-            }else{
-                if(checkIdentifierOrConstant()){
-                    //TODO: generate PIF
-                }
-                else{
-                    //TODO: throw lexical error
-                }
-            }
+        for(String candidateToken: candidateTokens){
+            TokenChecker tokenChecker = new TokenChecker(candidateToken, tokens);
         }
+
+
     }
 
     /**

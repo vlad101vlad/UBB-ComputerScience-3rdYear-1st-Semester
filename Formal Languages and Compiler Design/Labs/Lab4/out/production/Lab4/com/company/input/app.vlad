@@ -1,6 +1,7 @@
 nul main
 {
-    intreg number1;
+    intreg number1;ceva numar;
+    ;merge?
     intreg number2;
     intreg number3;
 
