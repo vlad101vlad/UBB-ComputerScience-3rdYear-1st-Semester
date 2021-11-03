@@ -1,14 +1,21 @@
 package com.company.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class MainService {
     private List<String> tokens;
+    private List<String> separators = new ArrayList<>();
 
     public MainService(List<String> tokens) {
         this.tokens = tokens;
+        initSeparators(tokens);
+    }
+
+    private void initSeparators(List<String> tokens){
+        tokens.forEach(token -> {
+            if(token.length() <= 2)
+                separators.add(token);
+        });
     }
 
     public void run(String applicationText){
@@ -45,17 +52,63 @@ public class MainService {
      */
     private List<String> generateCandidateTokens(String applicationSourceCode){
         String[] tokens = applicationSourceCode.trim().split("\\s+");
-        return new ArrayList<>(Arrays.asList(tokens));
+        List<String> generatedTokens =  new ArrayList<>(Arrays.asList(tokens));
+        return cleanupCandidateTokens(generatedTokens);
+
     }
 
+    /**
+     * Separators cand be next to identifiers/constants/other tokens, thus we need to split the words
+     * from possible separators
+     * @param candidateTokens
+     * @return List<String> finalCandidatesTokens
+     */
     private List<String> cleanupCandidateTokens(List<String> candidateTokens){
         List<String> finalCandidateTokens = new ArrayList<>();
+        final String[] separators = {""};
+        this.separators.forEach(separator -> separators[0] += separator);
+        separators[0] = removeDuplicates(separators[0]);
+
 
         candidateTokens.forEach(candidateToken -> {
+            String auxiliaryToken = candidateToken;
+            boolean foundSeparator = false;
 
+            for(int index = 0; index < candidateToken.length(); index++){
+                char c = candidateToken.charAt(index);
+                int nextIndex = separators[0].indexOf(c);
+                if(nextIndex > 0){
+                    auxiliaryToken = auxiliaryToken.substring(0, index)
+                            + "~" + c + "~";
+                    if(index + 2 < auxiliaryToken.length() - 1)
+                      auxiliaryToken += auxiliaryToken.substring(index+2, auxiliaryToken.length()-1);
+                    foundSeparator = true;
+                }
+            }
+            if(foundSeparator){
+                String[] split = auxiliaryToken.split("~");
+                Arrays.stream(split).forEach(newSplit -> finalCandidateTokens.add(newSplit));
+            }else{
+                finalCandidateTokens.add(candidateToken);
+            }
         });
 
         return finalCandidateTokens;
+    }
+
+
+    private String removeDuplicates(String stringWithDuplicates){
+        char[] chars = stringWithDuplicates.toCharArray();
+        Set<Character> charSet = new LinkedHashSet<Character>();
+        for (char c : chars) {
+            charSet.add(c);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Character character : charSet) {
+            sb.append(character);
+        }
+        return sb.toString();
     }
 
     private boolean checkIdentifierOrConstant() {
