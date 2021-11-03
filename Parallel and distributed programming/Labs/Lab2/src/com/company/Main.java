@@ -17,6 +17,11 @@ public class Main {
         List<Integer> vector2 = Util.generateVectorElements(VECTOR_SIZE);
         final Integer[] FINAL_SUM = {0};
 
+        System.out.println("Vector1: ");
+        vector1.forEach(element -> System.out.print(element + " "));
+        System.out.println("\nVector2: ");
+        vector2.forEach(element -> System.out.print(element + " "));
+        System.out.println("\n-------------------------------\n");
         ProducerConsumerQueue<Integer> queue = new ProducerConsumerQueue<>(5);
 
         /**

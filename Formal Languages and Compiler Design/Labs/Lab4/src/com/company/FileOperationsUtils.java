@@ -3,16 +3,30 @@ package com.company;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class FileOperationsUtils {
-    public static List<String> readTokens(){
-        List<String> tokens = new ArrayList<>();
-
+    public static List<String> readTokens() throws FileNotFoundException {
         File tokensFile = new File("src/com/company/input/tokens.in");
-        //TODO: finish implementing this
+        Scanner scanner = new Scanner(tokensFile);
 
+        List<String> tokens = computeTokens(scanner);
+
+        return tokens;
+    }
+
+    public static List<String> computeTokens(Scanner tokensScanner){
+        List<String> tokens;
+
+        String lines = "";
+        while (tokensScanner.hasNextLine())
+            lines += tokensScanner.nextLine();
+        tokensScanner.close();
+
+        String[] tokensArray = lines.split(",");
+        tokens = new ArrayList<>(Arrays.asList(tokensArray));
         return tokens;
     }
 
