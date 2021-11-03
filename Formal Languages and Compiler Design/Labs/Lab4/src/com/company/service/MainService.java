@@ -80,8 +80,8 @@ public class MainService {
                 if(nextIndex > 0){
                     auxiliaryToken = auxiliaryToken.substring(0, index)
                             + "~" + c + "~";
-                    if(index + 2 < auxiliaryToken.length() - 1)
-                      auxiliaryToken += auxiliaryToken.substring(index+2, auxiliaryToken.length()-1);
+                    if(index+1 < candidateToken.length()-1)
+                        auxiliaryToken += candidateToken.substring(index+1);
                     foundSeparator = true;
                 }
             }
