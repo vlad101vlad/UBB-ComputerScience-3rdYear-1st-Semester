@@ -21,4 +21,5 @@ nul main
     }
 
     afiseaza: maxim;
+    afiseaza: 2;
 }

@@ -1,7 +1,6 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,5 +39,13 @@ public class FileOperationsUtils {
         }
         scanner.close();
         return applicationText;
+    }
+
+    public static void writeToFile(String fileName, Object toBeWritten) throws IOException {
+        FileWriter fileWriter = new FileWriter(fileName);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
+
+        printWriter.println(toBeWritten);
+        printWriter.close();
     }
 }

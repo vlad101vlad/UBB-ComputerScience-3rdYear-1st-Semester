@@ -1,14 +1,25 @@
 package com.company.service;
 
+import com.company.FileOperationsUtils;
+import com.company.domain.PIF;
+import com.company.domain.SymbolTable;
+
+import java.io.IOException;
 import java.util.*;
 
 public class MainService {
     private List<String> tokens;
     private List<String> separators = new ArrayList<>();
+    private PIF pif;
+    private SymbolTable symbolTable;
+    private String LEXICAL_ERROR = "";
 
     public MainService(List<String> tokens) {
         this.tokens = tokens;
         initSeparators(tokens);
+
+        this.pif = new PIF();
+        this.symbolTable = new SymbolTable(31);
     }
 
     private void initSeparators(List<String> tokens){
@@ -18,17 +29,30 @@ public class MainService {
         });
     }
 
-    public void run(String applicationText){
-        boolean endOfFile = false;
-        int currentIndex = 0;
+    public void run(String applicationText) throws IOException {
 
         List<String> candidateTokens = generateCandidateTokens(applicationText);
 
         for(String candidateToken: candidateTokens){
             TokenChecker tokenChecker = new TokenChecker(candidateToken, tokens);
+            String result = tokenChecker.checkToken();
+
+
+            switch (result){
+                case "token":
+                    this.pif.addToPIF(candidateToken, -1);
+                    break;
+                case "constant":
+                case "identifier":
+                    int position = symbolTable.addToTable(result, candidateToken);
+                    this.pif.addToPIF(candidateToken, position);
+                default:
+                    LEXICAL_ERROR += "Lexical error at: " + candidateToken;
+            }
         }
 
-
+        FileOperationsUtils.writeToFile("src/com/company/output/ST.out", this.symbolTable);
+        FileOperationsUtils.writeToFile("src/com/company/output/PIF.out", this.pif);
     }
 
     /**
