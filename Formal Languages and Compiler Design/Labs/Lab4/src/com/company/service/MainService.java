@@ -46,13 +46,19 @@ public class MainService {
                 case "identifier":
                     int position = symbolTable.addToTable(result, candidateToken);
                     this.pif.addToPIF(candidateToken, position);
+                    break;
                 default:
                     LEXICAL_ERROR += "Lexical error at: " + candidateToken;
+                    break;
             }
         }
 
         FileOperationsUtils.writeToFile("src/com/company/output/ST.out", this.symbolTable);
         FileOperationsUtils.writeToFile("src/com/company/output/PIF.out", this.pif);
+        if(!LEXICAL_ERROR.equals(""))
+            System.out.println(LEXICAL_ERROR);
+        else
+            System.out.println("Lexically correct");
     }
 
     /**
@@ -104,7 +110,19 @@ public class MainService {
             }
         });
 
+        removeSpaces(finalCandidateTokens)
+                .forEach(toBeRemoved -> finalCandidateTokens.remove(toBeRemoved));
+
         return finalCandidateTokens;
+    }
+
+    private List<String> removeSpaces(List<String> tokenCandidates){
+        List<String> toBeRemoved = new ArrayList<>();
+        tokenCandidates.forEach(candidate -> {
+            if(candidate.equals(""))
+                toBeRemoved.add(candidate);
+        });
+        return toBeRemoved;
     }
 
 
@@ -120,15 +138,5 @@ public class MainService {
             sb.append(character);
         }
         return sb.toString();
-    }
-
-    private boolean checkIdentifierOrConstant() {
-        //TODO: finish implementing this
-        return true;
-    }
-
-    private boolean checkReservedOperatorSeparator() {
-        //TODO: finish implementing this
-        return true;
     }
 }
