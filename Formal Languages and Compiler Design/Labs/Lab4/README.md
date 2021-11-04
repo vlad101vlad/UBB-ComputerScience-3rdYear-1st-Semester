@@ -2,17 +2,84 @@ https://github.com/vlad101vlad/UBB-ComputerScience-3rdYear-1st-Semester/tree/mai
 
 DOCUMENTATION(work in progress):
 
-The parser works in the following way:
+CLASS DIAGRAM:
 
-* At the start of the program, we extract all the tokens from the tokens.in and we save them in memory.
-* Also , at the start of the program, we read the whole program in the toy language and we put it in a string and save it in memory.
+**StringOperationUtils** 
+-----------------------------
++removeSpaces(tokenCandidates: List<String>): List<String>
+    
+    Given a list of token candidates extracted from the source code, it elimitenates
+    the " "(blank) spaces from it.
 
-Then , the main algorithm for the scanner is used:
++removeDuplicates(stringWithDuplicates: String): String
+    
+    Given a string with duplicate characters, it returns a string with unique characters.
+    It is used for using it in the regex for generating the tokens from the source code
+    
+    
+**FileOperationsUtils**
+-----------------------------
++readTokens(): List<String> (throws FileNotFoundException) 
+    
+    It reads the source code from a file and it generates some partial tokens in their 
+    raw form (just splitting by blank spaces and new lines)
+    
++readApplication(): String (throws FileNotFoundException)
 
--> While we are not at the end of the file, we keep looping
-  -> we detect tokens
-      -> we search for white spaces(as this is our default separator) and make a substring from the two adjacent spaces 
-      -> we check whether the found substring is indeed a token from our lexic
-         -> if not , we throw a lexic error, 
-	 -> if yes , we do the computations for it
+    It reads the source code from the file and it adds it to a string
+    
++writeToFile(fileName: String,toBeWritten: Object): void (throws IOException)
+
+    Writes to a file the object. Used for writing the PIF and the SymbolTable
+    
+**PIF**
+-----------------------------
+-table: List<Pair<String, Integer>>; 
+
+methods:
+
++addToPIF(token: String,index: Integer): void
+
+    It adds a token to the PIF(table) with their corresponding index in the SymbolTable
++toString(): String
+    
+    Pretty print method for writing in the file
+    
+**SymbolTable**
+-----------------------------
+
+
+    The symbol table is represented by the clas SymbolTable.
+    
+    The internal structure of the symbol table is as follows:
+    
+    integer -> List<String,String>
+    
+    The main logic, for each new element we want to add to the symbol table:
+    
+    * we will pass it to the hash function
+    * we get the List which coresponds to the result of the hashValue
+    * we search for the element toBeAdded in this List:
+      * we find it, we return the current position
+      * we don't find it , we add it to this list and return the new size of the list
+    
+    In order to see the diference between <identifier> and <constant>, each element
+    of the hash table will be a pair of the format <value, type>
+
+
+-------------------------------------------------------------------------------------------------
+Class diagram:
+
+- symbolTableLength: int
+- symbolTable: Map< Integer, List< Map.Entry <String, String>>
+___________________________________
+
++hashFunction(String key): int
+
++addToTable(String type, String toBeAdded): int
+
+
+**TokenChecker**
+-----------------------------
+
 

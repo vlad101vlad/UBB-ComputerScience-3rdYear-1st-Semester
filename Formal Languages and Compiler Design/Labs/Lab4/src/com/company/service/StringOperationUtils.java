@@ -1,7 +1,9 @@
 package com.company.service;
 
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class StringOperationUtils {
 
@@ -17,5 +19,24 @@ public class StringOperationUtils {
                 toBeRemoved.add(candidate);
         });
         return toBeRemoved;
+    }
+
+    /**
+     * For a given string , it removes the duplicates in that string
+     * @param stringWithDuplicates String
+     * @return String - without duplicates
+     */
+    public static String removeDuplicates(String stringWithDuplicates){
+        char[] chars = stringWithDuplicates.toCharArray();
+        Set<Character> charSet = new LinkedHashSet<Character>();
+        for (char c : chars) {
+            charSet.add(c);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (Character character : charSet) {
+            sb.append(character);
+        }
+        return sb.toString();
     }
 }

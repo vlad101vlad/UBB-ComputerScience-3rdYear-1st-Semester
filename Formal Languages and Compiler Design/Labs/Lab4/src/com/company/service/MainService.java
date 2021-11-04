@@ -83,7 +83,7 @@ public class MainService {
         List<String> finalCandidateTokens = new ArrayList<>();
         final String[] separators = {""};
         this.separators.forEach(separator -> separators[0] += separator);
-        separators[0] = removeDuplicates(separators[0]);
+        separators[0] = StringOperationUtils.removeDuplicates(separators[0]);
 
 
         candidateTokens.forEach(candidateToken -> {
@@ -113,19 +113,5 @@ public class MainService {
                 .forEach(toBeRemoved -> finalCandidateTokens.remove(toBeRemoved));
 
         return finalCandidateTokens;
-    }
-
-    private String removeDuplicates(String stringWithDuplicates){
-        char[] chars = stringWithDuplicates.toCharArray();
-        Set<Character> charSet = new LinkedHashSet<Character>();
-        for (char c : chars) {
-            charSet.add(c);
-        }
-
-        StringBuilder sb = new StringBuilder();
-        for (Character character : charSet) {
-            sb.append(character);
-        }
-        return sb.toString();
     }
 }
