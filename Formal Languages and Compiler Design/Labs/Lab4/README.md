@@ -81,5 +81,70 @@ ___________________________________
 
 **TokenChecker**
 -----------------------------
+    Class is used for checking whether a given candidate token is indeed
+    a token (identifier, constant, reserved word/separator/operator)
+    
+-tokenCandidate: String;
+
+-tokens: List;
+
+
+
+methods:
+
++checkToken(): String
+
+    The main method of the class. It checks for the tokenCandite in which category
+    it belongs: identifier, constant or token.
+    It returns 
+        -> identifier
+        -> constant
+        -> token
+        -> "" (empty string for lexical error)
+
++checkNumber(numberCandidate: String): boolean
+        
+    Checks whether the argument is a nubmer or not. It uses 
+    this regex: ^[-+]?[1-9]+[0-9]*$
+
++checkIdentifier(identifierCandidate: String): boolean
+    
+    Checks whether the argument is a identifier or not. It uses the 
+    following regex: ^[_a-zA-Z][_a-zA-Z0-9]*$.
+    Identifier must start with a letter or underscore and can contain any digits
+    
+    
+**MAIN SERVICE**
+-----------------------------
+
+    The main class. This is the scanner in which all the magic happens.
+    
+
+
+-tokens: List;
+    
+    It contains all the tokens that have to be analyzed
+   
+-separators: List;
+
+-pif: PIF;
+
+-symbolTable: SymbolTable;
+
+-LEXICAL_ERROR: String;
+
+
+
+*methods:
+
++run(applicationText: String): void (throws IOException)
+
+    It starts the scanner. It loops through all the tokens 
+    extracted from the application text ( source code) and it tries 
+    to categorize each of them in identifier,constant, token. Depending on the 
+    category, they will be added to PIF and SymbolTable with the according rules 
+    from the algorithm from the course.
+    If they don't belong to any category, there will be a lexical error
+
 
 
