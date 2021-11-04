@@ -146,5 +146,9 @@ methods:
     from the algorithm from the course.
     If they don't belong to any category, there will be a lexical error
 
++cleanupCandidateTokens(candidateTokens: List): List
+
+    Helper function used for cleaning up the token list
+    
 
 
