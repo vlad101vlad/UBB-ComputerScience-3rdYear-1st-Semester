@@ -3,16 +3,16 @@ SYMBOL TABLE:
 
 
 0
-1(2 -> constant)	
+1(2 -> constant)	(0 -> constant)	(1 -> constant)	
 2
-3
-4
-5(maxim -> identifier)	
-6
-7(number1 -> identifier)	(number2 -> identifier)	(number3 -> identifier)	
-8
+3(cat -> identifier)	(num -> identifier)	
+4(timp -> identifier)	(fals -> identifier)	
+5(numar -> identifier)	
+6(number -> identifier)	
+7(isPrime -> identifier)	(divisor -> identifier)	
+8(adevarat -> identifier)	
 9
-10(MIN_INTREG -> identifier)	
+10
 11
 12
 13

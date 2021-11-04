@@ -24,6 +24,8 @@ public class TokenChecker {
     }
 
     public boolean checkNumber(String numberCandidate){
+        if(numberCandidate.equals("0"))
+            return true;
         String numberRegex = "^[-+]?[1-9]+[0-9]*$";
         return numberCandidate.matches(numberRegex);
     }
