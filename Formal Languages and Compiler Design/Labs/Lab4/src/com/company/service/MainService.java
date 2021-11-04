@@ -1,6 +1,5 @@
 package com.company.service;
 
-import com.company.FileOperationsUtils;
 import com.company.domain.PIF;
 import com.company.domain.SymbolTable;
 
@@ -110,21 +109,11 @@ public class MainService {
             }
         });
 
-        removeSpaces(finalCandidateTokens)
+        StringOperationUtils.removeSpaces(finalCandidateTokens)
                 .forEach(toBeRemoved -> finalCandidateTokens.remove(toBeRemoved));
 
         return finalCandidateTokens;
     }
-
-    private List<String> removeSpaces(List<String> tokenCandidates){
-        List<String> toBeRemoved = new ArrayList<>();
-        tokenCandidates.forEach(candidate -> {
-            if(candidate.equals(""))
-                toBeRemoved.add(candidate);
-        });
-        return toBeRemoved;
-    }
-
 
     private String removeDuplicates(String stringWithDuplicates){
         char[] chars = stringWithDuplicates.toCharArray();
