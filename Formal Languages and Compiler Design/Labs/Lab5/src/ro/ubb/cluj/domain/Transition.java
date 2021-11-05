@@ -22,4 +22,12 @@ public class Transition {
     public String getLiteral() {
         return literal;
     }
+
+    @Override
+    public String toString() {
+        String toBeWritten = "";
+        toBeWritten += startState + " -> " + nextState + " :" + literal;
+
+        return toBeWritten;
+    }
 }

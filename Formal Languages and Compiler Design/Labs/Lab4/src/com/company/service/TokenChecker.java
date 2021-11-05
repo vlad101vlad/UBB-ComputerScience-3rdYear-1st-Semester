@@ -15,7 +15,7 @@ public class TokenChecker {
         boolean isToken = tokens.contains(tokenCandidate);
         if(isToken)
             return "token";
-        if(checkNumber(tokenCandidate))
+        if(checkNumber(tokenCandidate) || checkString(tokenCandidate))
             return "constant";
         if(this.checkIdentifier(tokenCandidate))
             return "identifier";

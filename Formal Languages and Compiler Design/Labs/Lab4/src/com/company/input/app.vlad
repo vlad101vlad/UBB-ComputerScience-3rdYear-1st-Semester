@@ -1,5 +1,8 @@
+a = -5 + "adda" - 2 + 0;
+
 nul main
 {
+
     intreg number1;
     intreg number2;
     intreg number3;

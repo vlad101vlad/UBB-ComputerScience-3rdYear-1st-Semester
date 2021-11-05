@@ -1,6 +1,8 @@
 package ro.ubb.cluj.domain;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FAModel {
     private String initialState;
@@ -35,5 +37,21 @@ public class FAModel {
 
     public void setTransitionList(List<Transition> transitionList) {
         this.transitionList = transitionList;
+    }
+
+    public Set<String> getSetOfStates(){
+        Set<String> setOfStates = new HashSet<>();
+        transitionList.forEach(transition -> {
+            setOfStates.add(transition.getStartState());
+            setOfStates.add(transition.getNextState());
+        });
+
+        return setOfStates;
+    }
+
+    public Set<String> getAlphabet(){
+        Set<String> alphabet = new HashSet<>();
+        transitionList.forEach(transition -> alphabet.add(transition.getLiteral()));
+        return alphabet;
     }
 }
