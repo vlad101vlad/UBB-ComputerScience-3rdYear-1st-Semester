@@ -1,0 +1,23 @@
+logic isPrime(intreg number) {
+    intreg divisor = 2;
+
+    daca: number == 2{
+        returneaza adevarat;
+    }
+    cat timp: divisor * divisor < number{
+        daca: number % divisor == 0 {
+            returneaza fals;
+        }
+        divisor += 1;
+    }
+
+    returneaza adevarat;
+}
+
+nul main
+{
+    intreg numar;
+
+    scrie: numar;
+    afiseaza: isPrime(numar) ;
+}

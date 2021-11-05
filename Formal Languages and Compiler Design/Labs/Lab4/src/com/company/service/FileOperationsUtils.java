@@ -32,7 +32,7 @@ public class FileOperationsUtils {
     public static String readApplication() throws FileNotFoundException {
         String applicationText = "";
 
-        File applicationFile = new File("src/com/company/input/app2.vlad");
+        File applicationFile = new File("src/com/company/input/app.vlad");
         Scanner scanner = new Scanner(applicationFile);
         while(scanner.hasNextLine()){
             applicationText += scanner.nextLine();

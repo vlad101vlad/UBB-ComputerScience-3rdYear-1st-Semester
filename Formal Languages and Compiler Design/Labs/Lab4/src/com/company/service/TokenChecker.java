@@ -31,7 +31,8 @@ public class TokenChecker {
     }
 
     public boolean checkString(String stringCandidate){
-        return false;
+        String stringRegex = "^[\"\\'][_a-zA-Z0-9]+[\"\\']$";
+        return stringCandidate.matches(stringRegex);
     }
 
     public boolean checkIdentifier(String identifierCandidate){
