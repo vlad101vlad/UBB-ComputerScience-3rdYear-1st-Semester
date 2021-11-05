@@ -39,11 +39,11 @@ public class MainService {
 
             switch (result){
                 case "token":
-                    this.pif.addToPIF(candidateToken, -1);
+                    this.pif.addToPIF(candidateToken, new AbstractMap.SimpleEntry<Integer, Integer>(-1, -1));
                     break;
                 case "constant":
                 case "identifier":
-                    int position = symbolTable.addToTable(result, candidateToken);
+                    Map.Entry<Integer, Integer> position = symbolTable.addToTable(result, candidateToken);
                     this.pif.addToPIF(candidateToken, position);
                     break;
                 default:

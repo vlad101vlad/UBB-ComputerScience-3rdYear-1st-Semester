@@ -23,18 +23,18 @@ public class SymbolTable {
         return key.length() % symbolTableLength;
     }
 
-    public int addToTable(String type, String toBeAdded){
+    public Map.Entry<Integer, Integer> addToTable(String type, String toBeAdded){
         int hashResult = this.hashFunction(toBeAdded);
         List<Map.Entry<String, String>> hashKeyResults = this.symbolTable.get(hashResult);
 
         for(int i = 0; i < hashKeyResults.size(); i++){
             Map.Entry<String, String> currentPair = hashKeyResults.get(i);
             if(currentPair.getKey().equals(toBeAdded) && currentPair.getValue().equals(type))
-                return i;
+                return new AbstractMap.SimpleEntry<Integer, Integer>(hashResult, i);
         }
 
         hashKeyResults.add(new AbstractMap.SimpleEntry<>(toBeAdded, type));
-        return hashKeyResults.size() - 1;
+        return new AbstractMap.SimpleEntry<Integer, Integer>(hashResult, hashKeyResults.size() -1);
     }
 
     @Override

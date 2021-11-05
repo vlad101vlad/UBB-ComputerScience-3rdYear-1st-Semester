@@ -3,14 +3,14 @@ package com.company.domain;
 import java.util.*;
 
 public class PIF {
-    private List<Map.Entry<String, Integer>> table;
+    private final List<Map.Entry<String, Map.Entry<Integer, Integer>>> table;
 
     public PIF() {
         this.table = new ArrayList<>();
     }
 
-    public void addToPIF(String token, Integer index){
-        Map.Entry<String, Integer> entry = new AbstractMap.SimpleEntry<>(token, index);
+    public void addToPIF(String token, Map.Entry<Integer, Integer> index){
+        Map.Entry<String, Map.Entry<Integer, Integer>> entry = new AbstractMap.SimpleEntry<>(token, index);
         table.add(entry);
     }
 
@@ -18,8 +18,9 @@ public class PIF {
     public String toString() {
         String format = "PIF table: \n\n";
 
-        for(Map.Entry<String, Integer> keyValuePair: table ){
-            format += keyValuePair.getKey() + " -> " + keyValuePair.getValue() + "\n";
+        for(Map.Entry<String, Map.Entry<Integer, Integer>> keyValuePair: table ){
+            format += keyValuePair.getKey() + " -> " +
+                    "(" + keyValuePair.getValue().getKey() + " ," + keyValuePair.getValue().getValue() + ")" + "\n";
         }
 
         return format;
