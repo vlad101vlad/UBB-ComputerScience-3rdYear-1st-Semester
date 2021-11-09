@@ -1,5 +1,9 @@
 package ro.ubb.cluj;
 
+import ro.ubb.cluj.threadtypes.ColumnThread;
+import ro.ubb.cluj.threadtypes.KthElementThread;
+import ro.ubb.cluj.threadtypes.RowThread;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,19 +20,23 @@ public class Main {
 
 
         int NO_THREADS = 3;
-        int method = 1;
+        int method = 3;
         List<Thread> threadList = new ArrayList<>();
         for(int i = 0; i < NO_THREADS; i++){
             Runnable toBeRun = null;
 
             RowThread rowThread = new RowThread(i,NO_THREADS, resultMatrix, matrix1, matrix2);
             ColumnThread columnThread = new ColumnThread(i, NO_THREADS, resultMatrix, matrix1, matrix2);
+            KthElementThread kthElementThread = new KthElementThread(i , NO_THREADS, resultMatrix, matrix1, matrix2);
             switch (method){
                 case 1:
                     toBeRun = rowThread;
                     break;
                 case 2:
                     toBeRun = columnThread;
+                    break;
+                case 3:
+                    toBeRun = kthElementThread;
                     break;
                 default:
                     System.out.println("Invalid method chosen");

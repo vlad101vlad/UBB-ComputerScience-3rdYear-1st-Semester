@@ -1,13 +1,16 @@
-package ro.ubb.cluj;
+package ro.ubb.cluj.threadtypes;
 
-public class ColumnThread implements Runnable {
+import ro.ubb.cluj.Matrix;
+import ro.ubb.cluj.Util;
+
+public class RowThread implements Runnable {
     Integer remainder;
     Integer NO_THREADS;
     Matrix resultMatrix;
     Matrix sourceMatrix1;
     Matrix sourceMatrix2;
 
-    public ColumnThread(Integer remainder, Integer NO_THREADS, Matrix resultMatrix, Matrix sourceMatrix1, Matrix sourceMatrix2) {
+    public RowThread(Integer remainder, Integer NO_THREADS, Matrix resultMatrix, Matrix sourceMatrix1, Matrix sourceMatrix2) {
         this.remainder = remainder;
         this.NO_THREADS = NO_THREADS;
         this.resultMatrix = resultMatrix;
@@ -18,12 +21,12 @@ public class ColumnThread implements Runnable {
 
     @Override
     public void run() {
-        for(int colToComputeIndex = 1 + remainder;
-            colToComputeIndex <= resultMatrix.getNO_COLUMNS(); colToComputeIndex+= NO_THREADS){
+        for(int rowToComputeIndex = 1 + remainder;
+            rowToComputeIndex <= resultMatrix.getNO_ROWS(); rowToComputeIndex+=NO_THREADS){
             try {
-                Util.computeColumn(
+                Util.computeRow(
                         resultMatrix,
-                        colToComputeIndex,
+                        rowToComputeIndex,
                         sourceMatrix1, sourceMatrix2
                 );
             } catch (Exception e) {
