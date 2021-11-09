@@ -56,4 +56,32 @@ public class Util {
             }
         }
     }
+
+    public static void computeRow(
+            Matrix resultMatrix,
+            int rowResultIndex,
+            Matrix sourceMatrix1, Matrix sourceMatrix2
+    ) throws Exception {
+        for(int colResultIndex = 1; colResultIndex <= resultMatrix.getNO_COLUMNS(); colResultIndex++){
+            computeElement(
+                    resultMatrix,
+                    rowResultIndex, colResultIndex-1,
+                    sourceMatrix1.getRow(rowResultIndex), sourceMatrix2.getColumn(colResultIndex)
+            );
+        }
+    }
+
+    public static void computeColumn(
+            Matrix resultMatrix,
+            int colResultIndex,
+            Matrix sourceMatrix1, Matrix sourceMatrix2) throws Exception {
+                for(int rowResultIndex = 1; rowResultIndex <= resultMatrix.getNO_ROWS(); rowResultIndex++){
+                    computeElement(
+                            resultMatrix,
+                            rowResultIndex, colResultIndex-1,
+                            sourceMatrix1.getRow(rowResultIndex), sourceMatrix2.getColumn(colResultIndex)
+                    );
+                }
+    }
+
 }

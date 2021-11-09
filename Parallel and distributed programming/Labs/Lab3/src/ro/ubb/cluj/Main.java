@@ -1,5 +1,8 @@
 package ro.ubb.cluj;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -8,8 +11,38 @@ public class Main {
         Matrix matrix2 = Util.generateMatrix(5, 9);
 
         Matrix resultMatrix = new Matrix(9, 9);
-        resultMatrix.zeroMatrix();;
-        Util.testBasicMultiplication(matrix1, matrix2, resultMatrix);
+        resultMatrix.zeroMatrix();
+        //Util.testBasicMultiplication(matrix1, matrix2, resultMatrix);
+
+
+        int NO_THREADS = 3;
+        int method = 1;
+        List<Thread> threadList = new ArrayList<>();
+        for(int i = 0; i < NO_THREADS; i++){
+            Runnable toBeRun = null;
+
+            RowThread rowThread = new RowThread(i,NO_THREADS, resultMatrix, matrix1, matrix2);
+            ColumnThread columnThread = new ColumnThread(i, NO_THREADS, resultMatrix, matrix1, matrix2);
+            switch (method){
+                case 1:
+                    toBeRun = rowThread;
+                    break;
+                case 2:
+                    toBeRun = columnThread;
+                    break;
+                default:
+                    System.out.println("Invalid method chosen");
+                    break;
+            }
+
+            Thread thread = new Thread(toBeRun);
+            thread.start();
+            threadList.add(thread);
+        }
+
+        for(Thread thread: threadList){
+            thread.join();
+        }
 
         System.out.println(matrix1);
         System.out.println(matrix2);
