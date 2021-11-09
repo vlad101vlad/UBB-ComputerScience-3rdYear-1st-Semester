@@ -18,11 +18,27 @@ public class Matrix {
         }
     }
 
+    public void zeroMatrix(){
+        for(int rowIndex = 0; rowIndex < NO_ROWS; rowIndex++){
+            List<Integer> currentRow = this.matrix.get(rowIndex);
+            for(int colIndex = 0; colIndex < NO_COLUMNS; colIndex++)
+                currentRow.add(0);
+        }
+    }
+
     public Integer get(int row, int column){
         return matrix.get(row-1).get(column-1);
     }
     public List<Integer> getRow(int rowIndex){
         return this.matrix.get(rowIndex-1);
+    }
+
+    public List<Integer> getColumn(int columnIndex){
+        List<Integer> column = new ArrayList<>();
+        for(int rowIndex = 1; rowIndex <= NO_ROWS; rowIndex++){
+            column.add(this.get(rowIndex, columnIndex));
+        }
+        return column;
     }
 
     @Override
@@ -39,5 +55,13 @@ public class Matrix {
         }
 
         return toBeShown.toString();
+    }
+
+    public int getNO_COLUMNS() {
+        return NO_COLUMNS;
+    }
+
+    public int getNO_ROWS() {
+        return NO_ROWS;
     }
 }
