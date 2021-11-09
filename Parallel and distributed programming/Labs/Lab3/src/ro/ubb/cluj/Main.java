@@ -6,6 +6,8 @@ import ro.ubb.cluj.threadtypes.RowThread;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
 
 public class Main {
 
@@ -20,7 +22,7 @@ public class Main {
 
 
         int NO_THREADS = 3;
-        int method = 3;
+        int method = 12;
         List<Thread> threadList = new ArrayList<>();
         for(int i = 0; i < NO_THREADS; i++){
             Runnable toBeRun = null;
@@ -51,6 +53,35 @@ public class Main {
         for(Thread thread: threadList){
             thread.join();
         }
+
+        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(NO_THREADS);
+        int threadPoolMethod = 3;
+        List<Runnable> runnables = new ArrayList<>();
+        for(int i = 0; i < NO_THREADS; i++){
+            Runnable runnable = null;
+
+            switch (threadPoolMethod){
+                case 1:
+                    runnable = new RowThread(i, NO_THREADS, resultMatrix, matrix1, matrix2);
+                    break;
+                case 2:
+                    runnable = new ColumnThread(i, NO_THREADS, resultMatrix, matrix1, matrix2);
+                    break;
+                case 3:
+                    runnable = new KthElementThread(i, NO_THREADS, resultMatrix, matrix1, matrix2);
+                    break;
+                default:
+                    System.out.println("Invalid thread pool method");
+                    break;
+            }
+            runnables.add(runnable);
+        }
+        for(Runnable runnable: runnables){
+            threadPoolExecutor.submit(runnable);
+        }
+
+
+
 
         System.out.println(matrix1);
         System.out.println(matrix2);
