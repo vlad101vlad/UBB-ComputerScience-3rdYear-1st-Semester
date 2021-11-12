@@ -57,8 +57,8 @@ public class FAModel {
         return alphabet;
     }
 
-    private List<String> getPossibleNextState(String currentTerminal, String currentState){
-        List<String> transitions = new ArrayList<>();
+    private List<String> getPossibleNextStates(String currentTerminal, String currentState){
+        List<String> transitions;
 
         transitions = this.transitionList.stream()
                 .filter(transition -> transition.getStartState().equals(currentState)
@@ -73,7 +73,7 @@ public class FAModel {
     public boolean isSequenceAcceptedByFa(int index, List<String> sequence, String currentState){
         if(index < sequence.size()){
             String currentTerminal = sequence.get(index);
-            List<String> possibleNextState =  getPossibleNextState(currentTerminal, currentState);
+            List<String> possibleNextState =  getPossibleNextStates(currentTerminal, currentState);
 
             if(possibleNextState.size() < 1){
                 return false;
