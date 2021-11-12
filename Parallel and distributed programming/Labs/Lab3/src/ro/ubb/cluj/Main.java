@@ -22,7 +22,7 @@ public class Main {
 
 
         int NO_THREADS = 3;
-        int method = 12;
+        int method = 3;
         List<Thread> threadList = new ArrayList<>();
         for(int i = 0; i < NO_THREADS; i++){
             Runnable toBeRun = null;
@@ -55,10 +55,15 @@ public class Main {
         }
 
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(NO_THREADS);
-        int threadPoolMethod = 3;
+        int threadPoolMethod = 0;
         List<Runnable> runnables = new ArrayList<>();
         for(int i = 0; i < NO_THREADS; i++){
-            Runnable runnable = null;
+            Runnable runnable = new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("do nothing");
+                }
+            };
 
             switch (threadPoolMethod){
                 case 1:

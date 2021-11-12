@@ -1,8 +1,10 @@
 package ro.ubb.cluj.domain;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class FAModel {
     private String initialState;
@@ -53,5 +55,38 @@ public class FAModel {
         Set<String> alphabet = new HashSet<>();
         transitionList.forEach(transition -> alphabet.add(transition.getLiteral()));
         return alphabet;
+    }
+
+    private List<String> getPossibleNextState(String currentTerminal, String currentState){
+        List<String> transitions = new ArrayList<>();
+
+        transitions = this.transitionList.stream()
+                .filter(transition -> transition.getStartState().equals(currentState)
+                        && transition.getLiteral().equals(currentTerminal))
+                .map(transition -> transition.getNextState())
+                .collect(Collectors.toList());
+
+        return transitions;
+    }
+
+
+    public boolean isSequenceAcceptedByFa(int index, List<String> sequence, String currentState){
+        if(index < sequence.size()){
+            String currentTerminal = sequence.get(index);
+            List<String> possibleNextState =  getPossibleNextState(currentTerminal, currentState);
+
+            if(possibleNextState.size() < 1){
+                return false;
+            }
+
+            for(String state: possibleNextState){
+                if(this.finalStates.contains(state))
+                    return true;
+                if(this.isSequenceAcceptedByFa(index + 1, sequence, state))
+                    return true;
+            }
+        }
+
+        return false;
     }
 }

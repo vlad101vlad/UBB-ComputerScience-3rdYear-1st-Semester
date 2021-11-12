@@ -22,7 +22,7 @@ public class Util {
             throw new Exception("Error while multiplying row*column, not the same size\n");
 
         for(int index = 0; index < row.size(); index++)
-            result += row.get(index) + column.get(index);
+            result += row.get(index) * column.get(index);
 
         return result;
     }
