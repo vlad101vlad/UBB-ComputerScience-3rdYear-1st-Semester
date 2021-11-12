@@ -80,7 +80,7 @@ public class FAModel {
             }
 
             for(String state: possibleNextState){
-                if(this.finalStates.contains(state))
+                if(this.finalStates.contains(state) && index == sequence.size() - 1)
                     return true;
                 if(this.isSequenceAcceptedByFa(index + 1, sequence, state))
                     return true;

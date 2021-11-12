@@ -44,7 +44,11 @@ public class Menu {
                         System.out.print("The sequence ");
                         sequence.forEach(string -> System.out.print(string + " "));
                         System.out.print(" is ");
-                        boolean result =
+                        boolean result;
+                        if(sequence.size() == 1 && sequence.get(0).equals(""))
+                            result = true;
+                        else
+                            result =
                                 faModel.isSequenceAcceptedByFa(0, sequence, this.faModel.getInitialState());
                         if(result)
                             System.out.println(" ACCEPTED by the FA.");

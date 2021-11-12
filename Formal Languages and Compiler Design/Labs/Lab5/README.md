@@ -44,8 +44,25 @@ _FA Model_
     For each "currentState", the method will generate all the possible next states and will check for each of them 
     if it is possible to get to an end(reach the final state).
     
+    
+FA.in:
+
+digit = "0"|"1"|...|"9"
+letter = "A"|"B"|...|"Z"|"a"|"b"|...|"z"
+nr = ("0"|digit) {digit}
+string = (digit | letter) {digit | letter}
+value = nr | string
+state = string {" ", value}
+initial_state = state
+final_state = state
+
+line1 = initial_state
+line2 = final_state {" ", final_state}
+otherLines = ( state, " ", state, " ", state, "\n" ) { state, " ", state, " ", alphabetValue, "\n" }
 
 
-
+q0 ->1-> q0
+    ->0 -> q1 -> 0 -> q2 -> 0 -> q3 ->1 ->q3
+                                    -> 0 -> q1
 
 
