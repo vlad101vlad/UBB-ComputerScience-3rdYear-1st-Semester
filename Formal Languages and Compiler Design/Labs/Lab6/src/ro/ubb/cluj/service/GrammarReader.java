@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class GrammarReader {
     private final String filePath;
@@ -57,12 +58,17 @@ public class GrammarReader {
         String[] nonTerminalWithProduction = line.split("=");
 
         String[] productionRule = nonTerminalWithProduction[1].split("\\s+");
-        List<String> productionRuleList = new ArrayList<>(Arrays.asList(productionRule));
+        List<String> productionRuleList =  this.removeEmptyStrings(new ArrayList<>(Arrays.asList(productionRule)));
 
         production.setNonTerminal(nonTerminalWithProduction[0]);
         production.setProductionRule(productionRuleList);
 
         return production;
+    }
+
+    private List<String> removeEmptyStrings(List<String> list){
+        return list.stream().filter(string -> !string.equals(""))
+                .collect(Collectors.toList());
     }
 
 

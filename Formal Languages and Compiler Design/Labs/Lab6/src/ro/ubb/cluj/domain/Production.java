@@ -29,4 +29,15 @@ public class Production {
     public void setProductionRule(List<String> productionRule) {
         this.productionRule = productionRule;
     }
+
+    @Override
+    public String toString() {
+        final String[] toBePrinted = new String[1];
+        toBePrinted[0] = "";
+
+        toBePrinted[0] += this.getNonTerminal() + " -> ";
+        this.getProductionRule().forEach(production -> toBePrinted[0] += production + " ");
+
+        return toBePrinted[0];
+    }
 }
