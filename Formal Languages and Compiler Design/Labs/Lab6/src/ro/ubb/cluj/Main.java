@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) throws FileNotFoundException {
 	// write your code here
-        final String GRAMMAR_FILE_PATH = "src/ro/ubb/cluj/input/grammar.in";
+        final String GRAMMAR_FILE_PATH = "src/ro/ubb/cluj/input/g1.txt";
 
         GrammarReader grammarReader = new GrammarReader(GRAMMAR_FILE_PATH);
         GrammarModel grammarModel = grammarReader.readGrammar();

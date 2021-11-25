@@ -1,5 +1,6 @@
 package ro.ubb.cluj.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GrammarModel {
@@ -49,5 +50,22 @@ public class GrammarModel {
 
     public void setTerminals(List<String> terminals) {
         this.terminals = terminals;
+    }
+
+    public List<Production> getProductionsForNonterminal(String nonTerminal) throws Exception {
+        List<Production> productionList = new ArrayList<>();
+
+        boolean validNonTerminal = this.getNonTerminals().contains(nonTerminal);
+        if(!validNonTerminal){
+            throw new Exception("The terminal you have inserted does not exist in the grammar!\n");
+        }
+
+        this.getProductions().forEach(
+                production -> {
+                    if(production.getNonTerminal().equals(nonTerminal)) productionList.add(production);
+                }
+        );
+
+        return productionList;
     }
 }

@@ -60,7 +60,7 @@ public class GrammarReader {
         String[] productionRule = nonTerminalWithProduction[1].split("\\s+");
         List<String> productionRuleList =  this.removeEmptyStrings(new ArrayList<>(Arrays.asList(productionRule)));
 
-        production.setNonTerminal(nonTerminalWithProduction[0]);
+        production.setNonTerminal(nonTerminalWithProduction[0].strip());
         production.setProductionRule(productionRuleList);
 
         return production;

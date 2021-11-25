@@ -1,7 +1,9 @@
 package ro.ubb.cluj.service;
 
 import ro.ubb.cluj.domain.GrammarModel;
+import ro.ubb.cluj.domain.Production;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class Menu {
@@ -31,6 +33,16 @@ public class Menu {
                     grammarModel.getProductions().forEach(System.out::println);
                     break;
                 case 4:
+                    try{
+                        System.out.println("~Insert non-terminal: ");
+                        String nonTerminal = scanner.next();
+
+                        List<Production> productionList = grammarModel.getProductionsForNonterminal(nonTerminal);
+                        System.out.println("--The productions for the " + nonTerminal + " non terminal are:");
+                        productionList.forEach(production -> System.out.println("\t" + production));
+                    }catch (Exception e){
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 0:
                     System.exit(0);
