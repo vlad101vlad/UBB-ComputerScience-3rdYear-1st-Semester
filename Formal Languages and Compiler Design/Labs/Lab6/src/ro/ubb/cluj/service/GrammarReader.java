@@ -4,7 +4,6 @@ import ro.ubb.cluj.domain.GrammarModel;
 import ro.ubb.cluj.domain.Production;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +17,7 @@ public class GrammarReader {
         this.filePath = filePath;
     }
 
-    public GrammarModel readGrammar() throws FileNotFoundException {
+    public GrammarModel readGrammar() throws Exception {
         GrammarModel grammarModel = new GrammarModel();
         List<Production> productionList = new ArrayList<>();
         grammarModel.setProductions(productionList);
@@ -52,7 +51,7 @@ public class GrammarReader {
         return grammarModel;
     }
 
-    private Production readProductions(String line){
+    private Production readProductions(String line) throws Exception {
         Production production = new Production();
 
         String[] nonTerminalWithProduction = line.split("=");
@@ -60,10 +59,18 @@ public class GrammarReader {
         String[] productionRule = nonTerminalWithProduction[1].split("\\s+");
         List<String> productionRuleList =  this.removeEmptyStrings(new ArrayList<>(Arrays.asList(productionRule)));
 
+        if(!isCFG(nonTerminalWithProduction[0].strip()))
+            throw new Exception("GRAMMAR IS NOT CFG!");
+
         production.setNonTerminal(nonTerminalWithProduction[0].strip());
         production.setProductionRule(productionRuleList);
 
         return production;
+    }
+
+    private boolean isCFG(String leftSideNonTerminals){
+        String[] nonTerminals = leftSideNonTerminals.split("\\s+");
+        return nonTerminals.length <= 1;
     }
 
     private List<String> removeEmptyStrings(List<String> list){

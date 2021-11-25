@@ -68,4 +68,8 @@ public class GrammarModel {
 
         return productionList;
     }
+
+    private void checkCFG(){
+
+    }
 }

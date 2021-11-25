@@ -8,7 +8,7 @@ import java.io.FileNotFoundException;
 
 public class Main {
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws Exception {
 	// write your code here
         final String GRAMMAR_FILE_PATH = "src/ro/ubb/cluj/input/g1.txt";
 
