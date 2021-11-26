@@ -17,6 +17,8 @@ public class TestFunctions {
         test_AdvanceOperation();
         test_ExpandOperations();
         test_CanExpand();
+        test_MomentaryInsuccess();
+        test_canGoBack();
     }
 
     private void test_initDescendentConfiguration() throws Exception {
@@ -34,7 +36,7 @@ public class TestFunctions {
         descendantConfiguration.setInputIndex(0);
         descendantConfiguration.getInputStack().push("a");
 
-        myAssert(Operations.canAdvance(descendantConfiguration, inputSequence));
+        myAssert(Operations.OperationChecker.canAdvance(descendantConfiguration, inputSequence));
         Operations.advance(descendantConfiguration);
         myAssert(descendantConfiguration.getInputIndex() == 1);
         myAssert(descendantConfiguration.getInputStack().empty());
@@ -42,7 +44,7 @@ public class TestFunctions {
         descendantConfiguration.getInputStack().push("b");
         descendantConfiguration.getInputStack().push("a");
 
-        myAssert(Operations.canAdvance(descendantConfiguration, inputSequence));
+        myAssert(Operations.OperationChecker.canAdvance(descendantConfiguration, inputSequence));
         Operations.advance(descendantConfiguration);
         myAssert(descendantConfiguration.getInputIndex() == 2);
         myAssert(descendantConfiguration.getWorkingStack().peek().equals("a"));
@@ -80,12 +82,38 @@ public class TestFunctions {
         DescendantConfiguration descendantConfiguration = new DescendantConfiguration();
         descendantConfiguration.getInputStack().push("S");
 
-        myAssert(Operations.canExpand(descendantConfiguration, grammarModel));
+        myAssert(Operations.OperationChecker.canExpand(descendantConfiguration, grammarModel));
 
         descendantConfiguration.getInputStack().pop();
         descendantConfiguration.getInputStack().push("random");
 
-        myAssert(!Operations.canExpand(descendantConfiguration, grammarModel));
+        myAssert(!Operations.OperationChecker.canExpand(descendantConfiguration, grammarModel));
+    }
+
+    public void test_MomentaryInsuccess() throws Exception {
+        DescendantConfiguration descendantConfiguration = new DescendantConfiguration();
+        descendantConfiguration.setInputIndex(0);
+        descendantConfiguration.getInputStack().push("a");
+
+        int initialSizeWorkingStack = descendantConfiguration.getWorkingStack().size();
+        int initialSizeInputStack = descendantConfiguration.getInputStack().size();
+
+        Operations.momentaryInsuccess(descendantConfiguration);
+
+        myAssert(descendantConfiguration.getParsingState() == ParsingState.BACK_STATE);
+        myAssert(descendantConfiguration.getInputStack().size() == initialSizeInputStack);
+        myAssert(descendantConfiguration.getWorkingStack().size() == initialSizeWorkingStack);
+    }
+
+    public void test_canGoBack() throws Exception {
+        DescendantConfiguration descendantConfiguration = new DescendantConfiguration();
+        descendantConfiguration.getWorkingStack().push("a");
+        descendantConfiguration.getWorkingStack().push(new NonterminalAndProduction("S", 1));
+
+        myAssert(!Operations.OperationChecker.canGoBack(descendantConfiguration));
+
+        descendantConfiguration.getWorkingStack().pop();
+        myAssert(Operations.OperationChecker.canGoBack(descendantConfiguration));
     }
 
     private boolean myAssert(boolean condition) throws Exception {

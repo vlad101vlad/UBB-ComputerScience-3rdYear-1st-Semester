@@ -1,9 +1,6 @@
 package ro.ubb.cluj.service;
 
-import ro.ubb.cluj.domain.DescendantConfiguration;
-import ro.ubb.cluj.domain.GrammarModel;
-import ro.ubb.cluj.domain.NonterminalAndProduction;
-import ro.ubb.cluj.domain.Production;
+import ro.ubb.cluj.domain.*;
 
 import java.util.List;
 
@@ -30,16 +27,31 @@ public class Operations {
         descendantConfiguration.setInputIndex(descendantConfiguration.getInputIndex() + 1);
     }
 
-    public static boolean canAdvance(DescendantConfiguration descendantConfiguration,
-                                     List<String> inputSequence){
-        String nextNonTerminal = inputSequence.get(descendantConfiguration.getInputIndex());
-
-        return descendantConfiguration.getInputStack().peek().equals(nextNonTerminal);
+    public static void momentaryInsuccess(DescendantConfiguration descendantConfiguration){
+        descendantConfiguration.setParsingState(ParsingState.BACK_STATE);
     }
 
-    public static boolean canExpand(DescendantConfiguration descendantConfiguration, GrammarModel grammarModel){
-        String nextInInputStack = descendantConfiguration.getInputStack().peek();
 
-        return grammarModel.getNonTerminals().contains(nextInInputStack);
+
+    public static class OperationChecker{
+        public static boolean canAdvance(DescendantConfiguration descendantConfiguration,
+                                         List<String> inputSequence){
+            String nextNonTerminal = inputSequence.get(descendantConfiguration.getInputIndex());
+
+            return descendantConfiguration.getInputStack().peek().equals(nextNonTerminal);
+        }
+
+        public static boolean canExpand(DescendantConfiguration descendantConfiguration, GrammarModel grammarModel){
+            String nextInInputStack = descendantConfiguration.getInputStack().peek();
+
+            return grammarModel.getNonTerminals().contains(nextInInputStack);
+        }
+
+        public static boolean canGoBack(DescendantConfiguration descendantConfiguration){
+            Object lastElementWorkingStack = descendantConfiguration.getWorkingStack().peek();
+
+            return lastElementWorkingStack instanceof String;
+        }
     }
+
 }
