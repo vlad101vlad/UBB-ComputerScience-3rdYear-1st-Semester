@@ -19,6 +19,7 @@ public class TestFunctions {
         test_CanExpand();
         test_MomentaryInsuccess();
         test_canGoBack();
+        test_goBack();
     }
 
     private void test_initDescendentConfiguration() throws Exception {
@@ -103,6 +104,17 @@ public class TestFunctions {
         myAssert(descendantConfiguration.getParsingState() == ParsingState.BACK_STATE);
         myAssert(descendantConfiguration.getInputStack().size() == initialSizeInputStack);
         myAssert(descendantConfiguration.getWorkingStack().size() == initialSizeWorkingStack);
+    }
+
+    public void test_goBack() throws Exception {
+        DescendantConfiguration descendantConfiguration = new DescendantConfiguration();
+        descendantConfiguration.setInputIndex(1);
+        descendantConfiguration.getWorkingStack().push("a");
+
+        Operations.goBack(descendantConfiguration);
+        myAssert(descendantConfiguration.getInputStack().peek().equals("a"));
+        myAssert(descendantConfiguration.getWorkingStack().size() == 0);
+        myAssert(descendantConfiguration.getInputIndex() == 0);
     }
 
     public void test_canGoBack() throws Exception {

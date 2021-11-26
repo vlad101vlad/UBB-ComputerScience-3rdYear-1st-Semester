@@ -31,6 +31,13 @@ public class Operations {
         descendantConfiguration.setParsingState(ParsingState.BACK_STATE);
     }
 
+    public static void goBack(DescendantConfiguration descendantConfiguration){
+        String badTerminal = (String) descendantConfiguration.getWorkingStack().pop();
+
+        descendantConfiguration.setInputIndex(descendantConfiguration.getInputIndex() - 1);
+        descendantConfiguration.getInputStack().push(badTerminal);
+    }
+
 
 
     public static class OperationChecker{
