@@ -38,6 +38,50 @@ public class Operations {
         descendantConfiguration.getInputStack().push(badTerminal);
     }
 
+    public static void anotherTry(DescendantConfiguration descendantConfiguration, GrammarModel grammarModel) throws Exception {
+        NonterminalAndProduction nonterminalAndProduction
+                = (NonterminalAndProduction) descendantConfiguration.getWorkingStack().peek();
+
+        int currentProductionIndex = nonterminalAndProduction.getProductionIndex();
+        String nonTerminal = nonterminalAndProduction.getNonTerminal();
+
+        List<Production> productionsForNonterminal = grammarModel.getProductionsForNonterminal(nonTerminal);
+        Production currentProduction = productionsForNonterminal.get(currentProductionIndex);
+
+        if(currentProductionIndex + 1 < productionsForNonterminal.size()){
+            Production nextProduction = productionsForNonterminal.get(currentProductionIndex + 1);
+
+            descendantConfiguration.getWorkingStack().pop();
+            currentProduction.getProductionRule().forEach(production
+                    -> descendantConfiguration.getInputStack().pop());
+
+            descendantConfiguration.getWorkingStack().push(
+                    new NonterminalAndProduction(nonTerminal, currentProductionIndex+1)
+            );
+            for(int index = nextProduction.getProductionRule().size() - 1; index >= 0; index--){
+                String currentTerminal = nextProduction.getProductionRule().get(index);
+                descendantConfiguration.getInputStack().push(currentTerminal);
+            }
+
+            descendantConfiguration.setParsingState(ParsingState.NORMAL_STATE);
+        }else{
+            currentProduction.getProductionRule().forEach(production
+                    -> descendantConfiguration.getInputStack().pop());
+            descendantConfiguration.getInputStack().push(nonTerminal);
+            descendantConfiguration.getWorkingStack().pop();
+            descendantConfiguration.setParsingState(ParsingState.BACK_STATE);
+
+            if(
+                    descendantConfiguration.getInputStack().peek().equals(grammarModel.getInitialNonTerminal())
+                    && descendantConfiguration.getInputIndex() == 0
+            ){
+                descendantConfiguration.setParsingState(ParsingState.ERROR_STATE);
+                descendantConfiguration.getInputStack().pop();
+            }
+        }
+
+    }
+
 
 
     public static class OperationChecker{

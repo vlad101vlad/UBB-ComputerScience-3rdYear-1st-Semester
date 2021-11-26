@@ -20,6 +20,8 @@ public class TestFunctions {
         test_MomentaryInsuccess();
         test_canGoBack();
         test_goBack();
+        test_anotherTry();
+        test_AnotherTry_error();
     }
 
     private void test_initDescendentConfiguration() throws Exception {
@@ -126,6 +128,57 @@ public class TestFunctions {
 
         descendantConfiguration.getWorkingStack().pop();
         myAssert(Operations.OperationChecker.canGoBack(descendantConfiguration));
+    }
+
+    public void test_anotherTry() throws Exception {
+        DescendantConfiguration descendantConfiguration = new DescendantConfiguration();
+        descendantConfiguration.getWorkingStack().push(new NonterminalAndProduction("S", 0));
+
+        GrammarModel grammarModel = new GrammarModel();
+        grammarModel.setInitialNonTerminal("V");
+        grammarModel.setNonTerminals(new ArrayList<>(Arrays.asList("S")));
+
+        Production production1 = new Production("S", new ArrayList<>(Arrays.asList("a", "S", "b", "S")));
+        production1.getProductionRule().forEach(element -> descendantConfiguration.getInputStack().push(element));
+
+        Production production2 = new Production("S", new ArrayList<>(Arrays.asList("c", "d")));
+        grammarModel.setProductions(new ArrayList<>(Arrays.asList(production1, production2)));
+
+        Operations.anotherTry(descendantConfiguration, grammarModel);
+        NonterminalAndProduction nonterminalAndProductionAfterTry
+                = (NonterminalAndProduction) descendantConfiguration.getWorkingStack().peek();
+        myAssert(nonterminalAndProductionAfterTry.getNonTerminal().equals("S"));
+        myAssert(nonterminalAndProductionAfterTry.getProductionIndex() == 1);
+        myAssert(descendantConfiguration.getParsingState() == ParsingState.NORMAL_STATE);
+
+        myAssert(descendantConfiguration.getInputStack().peek().equals("c"));
+        myAssert(descendantConfiguration.getInputStack().size() == 2);
+
+        Operations.anotherTry(descendantConfiguration, grammarModel);
+        myAssert(descendantConfiguration.getParsingState() == ParsingState.BACK_STATE);
+        myAssert(descendantConfiguration.getWorkingStack().size() == 0);
+        myAssert(descendantConfiguration.getInputStack().peek().equals("S"));
+    }
+
+    void test_AnotherTry_error() throws Exception {
+        DescendantConfiguration descendantConfiguration = new DescendantConfiguration();
+        descendantConfiguration.getWorkingStack().push(new NonterminalAndProduction("V", 0));
+        descendantConfiguration.setInputIndex(0);
+        descendantConfiguration.setParsingState(ParsingState.BACK_STATE);
+
+
+        GrammarModel grammarModel = new GrammarModel();
+        grammarModel.setInitialNonTerminal("V");
+        Production production = new Production("V", new ArrayList<>(Arrays.asList("a b")));
+        production.getProductionRule().forEach(productionRule -> descendantConfiguration.getInputStack().push(productionRule));
+        grammarModel.setProductions(new ArrayList<>(Arrays.asList(production)));
+        grammarModel.setNonTerminals(new ArrayList<>(Arrays.asList("V", "S")));
+
+        int initialLenght = descendantConfiguration.getInputStack().size();
+        Operations.anotherTry(descendantConfiguration, grammarModel);
+        myAssert(descendantConfiguration.getParsingState() == ParsingState.ERROR_STATE);
+
+        myAssert(descendantConfiguration.getInputStack().size() == initialLenght-production.getProductionRule().size());
     }
 
     private boolean myAssert(boolean condition) throws Exception {
