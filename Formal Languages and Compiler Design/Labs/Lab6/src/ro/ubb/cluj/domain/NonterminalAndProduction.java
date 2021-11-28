@@ -27,9 +27,6 @@ public class NonterminalAndProduction {
 
     @Override
     public String toString() {
-        return "NonterminalAndProduction{" +
-                "nonTerminal='" + nonTerminal + '\'' +
-                ", productionIndex=" + productionIndex +
-                '}';
+        return "(" + this.getNonTerminal() + "->" + this.getProductionIndex() + ")";
     }
 }

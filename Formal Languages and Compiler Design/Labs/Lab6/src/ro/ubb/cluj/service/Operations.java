@@ -5,6 +5,8 @@ import ro.ubb.cluj.domain.*;
 import java.util.List;
 
 public class Operations {
+    public static boolean STATIC_LOGGER = false;
+
     public static void expand(DescendantConfiguration descendantConfiguration, GrammarModel grammarModel) throws Exception {
         String nextNonTerminal = descendantConfiguration.getInputStack().pop();
 
@@ -36,6 +38,10 @@ public class Operations {
 
         descendantConfiguration.setInputIndex(descendantConfiguration.getInputIndex() - 1);
         descendantConfiguration.getInputStack().push(badTerminal);
+    }
+
+    public static void success(DescendantConfiguration descendantConfiguration){
+        descendantConfiguration.setParsingState(ParsingState.FINAL_STATE);
     }
 
     public static void anotherTry(DescendantConfiguration descendantConfiguration, GrammarModel grammarModel) throws Exception {
@@ -87,9 +93,12 @@ public class Operations {
     public static class OperationChecker{
         public static boolean canAdvance(DescendantConfiguration descendantConfiguration,
                                          List<String> inputSequence){
-            String nextNonTerminal = inputSequence.get(descendantConfiguration.getInputIndex());
+            if(descendantConfiguration.getInputIndex() <= inputSequence.size() - 1){
+                String nextNonTerminal = inputSequence.get(descendantConfiguration.getInputIndex());
 
-            return descendantConfiguration.getInputStack().peek().equals(nextNonTerminal);
+                return descendantConfiguration.getInputStack().peek().equals(nextNonTerminal);
+            }
+            return false;
         }
 
         public static boolean canExpand(DescendantConfiguration descendantConfiguration, GrammarModel grammarModel){
@@ -102,6 +111,11 @@ public class Operations {
             Object lastElementWorkingStack = descendantConfiguration.getWorkingStack().peek();
 
             return lastElementWorkingStack instanceof String;
+        }
+
+        public static boolean canSuccess(DescendantConfiguration descendantConfiguration, List<String> inputSequnce){
+            return descendantConfiguration.getInputStack().empty()
+                    && descendantConfiguration.getInputIndex() == inputSequnce.size();
         }
     }
 
