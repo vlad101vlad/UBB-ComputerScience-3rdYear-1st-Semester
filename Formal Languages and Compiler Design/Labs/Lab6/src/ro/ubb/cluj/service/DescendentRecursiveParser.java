@@ -49,5 +49,8 @@ public class DescendentRecursiveParser {
         if(this.descendantConfiguration.getParsingState() == ParsingState.ERROR_STATE)
             throw new Exception("Sequence cannot be parsed");
         System.out.println("Sequence accepted!");
+
+        TableBuilder tableBuilder = new TableBuilder(this.grammarModel, this.descendantConfiguration.getWorkingStack());
+        tableBuilder.buildTable();
     }
 }

@@ -59,10 +59,10 @@ public class GrammarReader {
         String[] productionRule = nonTerminalWithProduction[1].split("\\s+");
         List<String> productionRuleList =  this.removeEmptyStrings(new ArrayList<>(Arrays.asList(productionRule)));
 
-        if(!isCFG(nonTerminalWithProduction[0].strip()))
+        if(!isCFG(nonTerminalWithProduction[0].trim()))
             throw new Exception("GRAMMAR IS NOT CFG!");
 
-        production.setNonTerminal(nonTerminalWithProduction[0].strip());
+        production.setNonTerminal(nonTerminalWithProduction[0].trim());
         production.setProductionRule(productionRuleList);
 
         return production;

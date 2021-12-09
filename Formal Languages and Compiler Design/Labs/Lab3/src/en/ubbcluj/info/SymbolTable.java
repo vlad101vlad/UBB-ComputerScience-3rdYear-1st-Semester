@@ -37,3 +37,5 @@ public class SymbolTable {
         return hashKeyResults.size() - 1;
     }
 }
+
+///// hash -> pos (list(hash)) ; Sy[hash][pos]

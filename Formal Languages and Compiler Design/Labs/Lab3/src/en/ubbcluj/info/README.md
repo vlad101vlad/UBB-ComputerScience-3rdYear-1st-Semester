@@ -1,3 +1,6 @@
+https://github.com/vlad101vlad/UBB-ComputerScience-3rdYear-1st-Semester/tree/main/Formal%20Languages%20and%20Compiler%20Design/Labs/Lab3/src/en/ubbcluj/info
+
+###################################################################
 The symbol table is represented by the clas SymbolTable.
 
 The internal structure of the symbol table is as follows:
