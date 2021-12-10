@@ -1,6 +1,17 @@
-S
-S
-a b c
-S = a S b S
-S = a S
-S = c
+program
+program functie functie_main functie_list argument argument_list primitiva declaration expression relation condition
+assignment
+( ) { } : nul main identificator intreg logic daca
+program | functie_list functie_main functie_list
+functie | primitiva identificator ( argument_list ) { stmlist }
+functie_main | nul main { stm list }
+functie_list | functie functie_list
+argument | primitiva identificator
+argument_list | argument argument_list
+primitiva | intreg
+primitiva | logic
+declaration | primitiva identificator
+if_statement | daca : condition { stmlist }
+condition | expression relation expression
+assignment | identifier = expression ;
+

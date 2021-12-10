@@ -13,6 +13,54 @@ import java.util.List;
 
 public class Main {
 
+    public static List<String> sampleGrammar(){
+        List<String> grammar = new ArrayList<>();
+        grammar.add("null");
+        grammar.add("main");
+        grammar.add("{");
+        grammar.add("intreg");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("intreg");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("intreg");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("intreg");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("scrie");
+        grammar.add(":");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("scrie");
+        grammar.add(":");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("scrie");
+        grammar.add(":");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("daca");
+        grammar.add(":");
+        grammar.add("identificator");
+        grammar.add(">");
+        grammar.add("identificator");
+        grammar.add("{");
+        grammar.add("identificator");
+        grammar.add("=");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("afiseaza");
+        grammar.add(":");
+        grammar.add("identificator");
+        grammar.add(";");
+        grammar.add("}");
+
+        return grammar;
+    }
+
     public static void main(String[] args) throws Exception {
 	// write your code here
         final String GRAMMAR_FILE_PATH = "src/ro/ubb/cluj/input/g1.txt";
@@ -26,6 +74,7 @@ public class Main {
 //        Menu menu = new Menu(grammarModel);
 //        menu.run();
         List<String> inputSequence = new ArrayList<>(Arrays.asList("a", "a", "c", "b", "c"));
+//        List<String> inputSequence = new ArrayList<>(Arrays.asList("c"));
         DescendentRecursiveParser descendentRecursiveParser = new DescendentRecursiveParser(grammarModel, inputSequence);
         descendentRecursiveParser.runParser();
 

@@ -54,7 +54,7 @@ public class GrammarReader {
     private Production readProductions(String line) throws Exception {
         Production production = new Production();
 
-        String[] nonTerminalWithProduction = line.split("=");
+        String[] nonTerminalWithProduction = line.split("\\|");
 
         String[] productionRule = nonTerminalWithProduction[1].split("\\s+");
         List<String> productionRuleList =  this.removeEmptyStrings(new ArrayList<>(Arrays.asList(productionRule)));

@@ -28,7 +28,7 @@ public class TableBuilder {
         NonterminalAndProduction nonterminalAndProduction = (NonterminalAndProduction) this.workingStack.get(0);
         List<NonterminalParentIndex> newNonTerminals = new ArrayList<>();
 
-        generateTableRows(nonterminalAndProduction, 0, 0, false, newNonTerminals);
+        generateTableRows(nonterminalAndProduction, 0, -1, false, newNonTerminals);
 
         int iterator = 0;
         while(newNonTerminals.size() > iterator){
@@ -53,7 +53,7 @@ public class TableBuilder {
         List<NonterminalParentIndex> row = new ArrayList<>();
 
         if(!foundFirst){
-            addElement(index, nonterminalAndProduction.getNonTerminal(), parentIndex, 0);
+            addElement(index, nonterminalAndProduction.getNonTerminal(), parentIndex, -1);
             parentIndex = index;
             foundFirst = true;
         }
@@ -61,7 +61,7 @@ public class TableBuilder {
         List<String> productionExpanded = this.grammarModel
             .getProductionsForNonterminal(nonterminalAndProduction.getNonTerminal())
             .get(nonterminalAndProduction.getProductionIndex()).getProductionRule();
-        int leftSiblingIndex = 0;
+        int leftSiblingIndex = -1;
         for(String element: productionExpanded){
             index++;
             addElement(index, element, parentIndex, leftSiblingIndex);

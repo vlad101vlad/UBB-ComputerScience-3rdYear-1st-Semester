@@ -1,13 +1,10 @@
-a = -5 + "adda" - 2 + 0;
-
 nul main
 {
 
     intreg number1;
     intreg number2;
     intreg number3;
-
-    intreg maxim = MIN_INTREG;
+    intreg maxim;
 
     scrie: number1;
     scrie: number2;
@@ -15,12 +12,6 @@ nul main
 
     daca: number1 > maxim{
         maxim = number1;
-    }
-    daca: number2 > maxim{
-        maxim = number2;
-    }
-    daca: number3 > maxim{
-            maxim = number3;
     }
 
     afiseaza: maxim;

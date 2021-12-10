@@ -49,10 +49,10 @@ public class TableModel {
     @Override
     public String toString() {
         return "TableModel{" +
-            "index=" + index +
+            "index=" + (index+1) +
             ", info='" + info + '\'' +
-            ", parentIndex=" + parentIndex +
-            ", leftIndex=" + leftIndex +
+            ", parentIndex=" + (parentIndex+1) +
+            ", leftIndex=" + (leftIndex+1) +
             '}';
     }
 }
