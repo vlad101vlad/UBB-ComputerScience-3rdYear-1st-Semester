@@ -39,7 +39,11 @@ public class TableBuilder {
             iterator++;
         }
 
-        System.out.println("check");
+        printResult();
+    }
+
+    private void printResult(){
+        this.result.forEach(System.out::println);
     }
 
     private void generateTableRows(NonterminalAndProduction nonterminalAndProduction,
@@ -69,6 +73,8 @@ public class TableBuilder {
             }
             leftSiblingIndex = index;
         }
+        final int finalIndex = index;
+        nonterminalParentIndices.forEach(element -> element.setIndex(finalIndex));
     }
 
 
