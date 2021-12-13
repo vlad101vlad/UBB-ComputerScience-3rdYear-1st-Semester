@@ -4,8 +4,13 @@ import en.ubbcluj.info.domain.Polynomial;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -62,6 +67,8 @@ public class PolynomialOperations {
 
     public static Polynomial multiplySequencially(Polynomial factor1, Polynomial factor2){
         int size = factor1.getGrade() + factor2.getGrade() - 1;
+        if(size < 0)
+            size = 0;
         List<Integer> productResult = new ArrayList<>();
 
         for(int index = 0; index < size; index++)
@@ -133,6 +140,8 @@ public class PolynomialOperations {
 
     }
 
+
+
     public static AbstractMap.SimpleEntry<Long, Polynomial> multiplySequenciallyParallel(Polynomial factor1, Polynomial factor2) throws InterruptedException {
         int size = factor1.getGrade() + factor2.getGrade() - 1;
         int NR_THREADS = 10;
@@ -168,4 +177,56 @@ public class PolynomialOperations {
         return new AbstractMap.SimpleEntry<Long, Polynomial>(elapsed, new Polynomial(size, productCoefficinets));
     }
 
+    public static Polynomial multiplyKaratsubaParallel(int depth, Polynomial factor1, Polynomial factor2) throws InterruptedException, ExecutionException {
+        if(depth > 4)
+            return PolynomialOperations.multiplySequencially(factor1, factor2);
+        if(factor1.getGrade() < 2 || factor2.getGrade() < 2)
+            return PolynomialOperations.multiplySequencially(factor1, factor2);
+
+        int cuttingPoint = min(factor1.getGrade(), factor2.getGrade())/2;
+        List<Integer> lowAList = factor1.getCoefficients().subList(0, cuttingPoint);
+        List<Integer> lowBList = factor2.getCoefficients().subList(0, cuttingPoint);
+        List<Integer> highAList = factor1.getCoefficients().subList(cuttingPoint, factor1.getGrade());
+        List<Integer> highBList = factor2.getCoefficients().subList(cuttingPoint, factor2.getGrade());
+        Polynomial lowA = new Polynomial(lowAList.size(), lowAList);
+        Polynomial lowB = new Polynomial(lowBList.size(), lowBList);
+        Polynomial highA = new Polynomial(highAList.size(), highAList);
+        Polynomial highB = new Polynomial(highBList.size(), highBList);
+
+        int NO_OF_THREADS = 10;
+        ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(NO_OF_THREADS);
+
+        Future<Polynomial> fresult1 = threadPoolExecutor.submit(new Callable<Polynomial>() {
+            @Override
+            public Polynomial call() throws Exception {
+                return PolynomialOperations.multiplyKaratsubaParallel(depth+1, lowA, lowB);
+            }
+        });
+        Future<Polynomial> fresult2 = threadPoolExecutor.submit(new Callable<Polynomial>() {
+            @Override
+            public Polynomial call() throws Exception {
+                return PolynomialOperations
+                    .multiplyKaratsubaParallel(depth+1, PolynomialOperations.add(lowA , highA),
+                        PolynomialOperations.add(lowB, highB));
+            }
+        });
+        Future<Polynomial> fresult3 = threadPoolExecutor.submit(new Callable<Polynomial>() {
+            @Override
+            public Polynomial call() throws Exception {
+                return PolynomialOperations.multiplyKaratsubaParallel(depth+1, highA, highB);
+            }
+        });
+        threadPoolExecutor.shutdown();
+        threadPoolExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+
+        Polynomial result1 = fresult1.get();
+        Polynomial result2 = fresult2.get();
+        Polynomial result3 = fresult3.get();
+
+        Polynomial r1 = PolynomialOperations.shift(result3, 2 * cuttingPoint);
+        Polynomial r2 = PolynomialOperations.shift(
+            PolynomialOperations.substract(PolynomialOperations.substract(result2, result3), result1
+        ), cuttingPoint);
+        return PolynomialOperations.add(PolynomialOperations.add(r1, r2), result1);
+    }
 }

@@ -6,10 +6,11 @@ import en.ubbcluj.info.util.DummyDataGenerator;
 import en.ubbcluj.info.util.TestMethods;
 
 import java.util.AbstractMap;
+import java.util.concurrent.ExecutionException;
 
 public class Main {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
 	// write your code here
 //        Polynomial polynomialA = new Polynomial(5, DummyDataGenerator.generateCoefficientGrade5());
         Polynomial polynomialA = DummyDataGenerator.generatePolynomialOfGrade(140);
@@ -45,6 +46,17 @@ public class Main {
         System.out.println("Parallel multiplication: " + multiplyParallel);
         System.out.println("---done in: " + elapsedTime);
 
+
+        System.out.println("\n\n");
+        start = System.currentTimeMillis();
+        Polynomial karatsubaParallel = PolynomialOperations.multiplyKaratsubaParallel(1, polynomialA, polynomialB);
+        end = System.currentTimeMillis();
+        elapsedTime = end-start;
+        System.out.println("Parallel karatsuba: " + karatsubaParallel);
+        System.out.println("---done in: " + elapsedTime);
+
         System.out.println("end of program");
+
+
     }
 }
