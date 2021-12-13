@@ -1,0 +1,18 @@
+Intel(R) Core(TM) i7-6820HQ
+CPU @ 2.70GHz   2.71 GHz
+64 GB RAM
+
+
+Programming language: Java
+For 150 operations:
+-> Number of threads: 1 were done in 1 miliseconds
+-> Number of threads: 2 were done in 1 miliseconds
+-> Number of threads: 3 were done in 1 miliseconds
+-> Number of threads: 5 were done in 1 miliseconds
+-> Number of threads: 8 were done in 2 miliseconds
+-> Number of threads: 13 were done in 2 miliseconds
+-> Number of threads: 21 were done in 4 miliseconds
+-> Number of threads: 34 were done in 9 miliseconds
+-> Number of threads: 55 were done in 8 miliseconds
+-> Number of threads: 89 were done in 20 miliseconds
+-> Number of threads: 144 were done in 32 miliseconds

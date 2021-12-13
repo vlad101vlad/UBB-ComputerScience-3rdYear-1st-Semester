@@ -1,0 +1,12 @@
+For 150 operations:
+-> Number of threads: 1 were done in 0 miliseconds
+-> Number of threads: 2 were done in 3 miliseconds
+-> Number of threads: 3 were done in 6 miliseconds
+-> Number of threads: 5 were done in 1 miliseconds
+-> Number of threads: 8 were done in 2 miliseconds
+-> Number of threads: 13 were done in 14 miliseconds
+-> Number of threads: 21 were done in 11 miliseconds
+-> Number of threads: 34 were done in 13 miliseconds
+-> Number of threads: 55 were done in 33 miliseconds
+-> Number of threads: 89 were done in 38 miliseconds
+-> Number of threads: 144 were done in 69 miliseconds

@@ -1,0 +1,72 @@
+
+
+-> Operation#12 was done: transfered 8 money from 6 to 1
+... executed by Thread: Thread-16
+... current time: 10:23:53.842171800
+------------------------------------------------------------
+
+
+-> Operation#2 was done: transfered 9 money from 10 to 6
+... executed by Thread: Thread-1
+... current time: 10:23:53.842171800
+------------------------------------------------------------
+
+
+-> Operation#10 was done: transfered 12 money from 2 to 3
+... executed by Thread: Thread-12
+... current time: 10:23:53.842171800
+------------------------------------------------------------
+
+
+-> Operation#13 was done: transfered 13 money from 10 to 1
+... executed by Thread: Thread-8
+... current time: 10:23:53.842171800
+------------------------------------------------------------
+
+
+-> Operation#3 was done: transfered 14 money from 3 to 9
+... executed by Thread: Thread-95
+... current time: 10:23:53.843148600
+------------------------------------------------------------
+
+
+-> Operation#1 was done: transfered 9 money from 9 to 7
+... executed by Thread: Thread-0
+... current time: 10:23:53.842171800
+------------------------------------------------------------
+
+
+-> Operation#4 was done: transfered 15 money from 9 to 8
+... executed by Thread: Thread-3
+... current time: 10:23:53.842171800
+------------------------------------------------------------
+
+
+-> Operation#14 was done: transfered 7 money from 3 to 1
+... executed by Thread: Thread-15
+... current time: 10:23:53.843148600
+------------------------------------------------------------
+
+
+-> Operation#6 was done: transfered 12 money from 1 to 8
+... executed by Thread: Thread-4
+... current time: 10:23:53.843148600
+------------------------------------------------------------
+
+
+-> Operation#5 was done: transfered 6 money from 6 to 9
+... executed by Thread: Thread-2
+... current time: 10:23:53.843148600
+------------------------------------------------------------
+
+
+-> Operation#11 was done: transfered 9 money from 1 to 7
+... executed by Thread: Thread-10
+... current time: 10:23:53.843148600
+------------------------------------------------------------
+
+
+-> Operation#9 was done: transfered 7 money from 6 to 2
+... executed by Thread: Thread-6
+... current time: 10:23:53.844150200
+------------------------------------------------------------

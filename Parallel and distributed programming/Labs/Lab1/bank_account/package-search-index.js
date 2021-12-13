@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"en.ubbcluj.info"},{"l":"en.ubbcluj.info.domain"},{"l":"en.ubbcluj.info.service"},{"l":"en.ubbcluj.info.util"}];updateSearchResults();

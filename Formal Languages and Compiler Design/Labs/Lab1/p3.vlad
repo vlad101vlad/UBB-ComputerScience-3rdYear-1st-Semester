@@ -1,0 +1,13 @@
+#inlcude inout.vlad
+
+
+nul main{
+    intreg tablou = [2, 4, 6, 11, 15];
+
+    intreg suma = 0;
+    pentru: intreg number; din tablou{
+       suma += intreg;
+    }
+
+    afiseaza: suma;
+}
