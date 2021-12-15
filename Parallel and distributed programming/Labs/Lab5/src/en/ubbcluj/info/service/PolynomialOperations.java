@@ -217,7 +217,7 @@ public class PolynomialOperations {
             }
         });
         threadPoolExecutor.shutdown();
-        threadPoolExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
+        //threadPoolExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS);
 
         Polynomial result1 = fresult1.get();
         Polynomial result2 = fresult2.get();
